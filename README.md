@@ -13,14 +13,14 @@ pf_loaduser plugin, follow the syntax:
 
 ```
 package require pf_loaduser
-pf_loaduser <filename.pfa> <residues_renumbered> <ignore_zeros> <color_scale> <color_min> <color_max>
+pf_loaduser <filename.psa> <residues_renumbered> <ignore_zeros> <color_scale> <color_min> <color_max>
 ```
 
 The first line will instruct VMD to load the pf_loaduser plugin which will make
 available the pf_loaduser function which is called on the 2nd  line. The
 pf_loaduser function takes several arguments:
 
-filename.pfa is a string representing the name of the file containing per-atom
+filename.psa is a string representing the name of the file containing per-atom
 data; it assumes that there are as many lines with data in the file as there
 are currently loaded frames. There is no default, a file name should always be
 provided.  residues_renumbered is a string containing “true” or “false”. It
@@ -46,13 +46,13 @@ in the Tk console type:
 ```
 package require pf_loaduser
 animate delete beg 0 end 0 skip 0 0
-pf_loaduser "peratom-sum.pfa"
+pf_loaduser "peratom-sum.psa"
 ```
 
 The second line tells VMD to remove the first frame – this is needed as the PDB
-will act as the first frame and the .pfa file contains only as many frames as
+will act as the first frame and the .psa file contains only as many frames as
 there are in the trajectory. The third line loads the user data from the
-“peratom-sum.pfa” file and lets VMD automatically map the colors using the
+“peratom-sum.psa” file and lets VMD automatically map the colors using the
 minimum and maximum value from this file.
 
 As the data is assigned to the per-atom “user” field, VMD takes care of
@@ -121,4 +121,15 @@ when VMD displays a different frame.  If there are many pairwise forces to be
 represented, drawing the cylinders from a Tcl function can become slow and the
 display can become cluttered with so many geometrical shapes. It's recommended
 to filter the pairwise forces, so that only a few are represented at a time.
+
+## Execute the tests
+
+Ensure that `vmd` is in your PATH, change into `tests/alagly` and execute:
+
+```
+vmd -e pairwise_forces_scalar_summed_atom.vmd
+vmd -e pairwise_forces_scalar_summed_residue.vmd
+vmd -e stress_atom.vmd
+vmd -e stress_residue.vmd
+```
 
