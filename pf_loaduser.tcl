@@ -46,7 +46,7 @@ proc pf_min_ignore_zero { numbers } {
 proc pf_loaduser { fname {residues_renumbered false} {ignore_zeros 0} {color_scale "BGR"} {color_min -1} {color_max -1} } {
 	# check whether it's a file containing residue data
 	set fnamelen [string length $fname]
-	if {[string compare [string tolower [string range $fname [expr $fnamelen - 4] $fnamelen]] ".pfr"] == 0} {
+	if {[string compare [string tolower [string range $fname [expr $fnamelen - 4] $fnamelen]] ".psr"] == 0} {
 		set pf_residues 1
 	} else {
 		set pf_residues 0
@@ -69,11 +69,13 @@ proc pf_loaduser { fname {residues_renumbered false} {ignore_zeros 0} {color_sca
 	set framecount [molinfo top get numframes]
 	set sel [atomselect top all]
 
-	set dat [open $fname r]
 	# min is set to a big number, so actual numbers are smaller than it
 	set color_scale_min 9.9e20
 	# data should always be positive, so it's safe to set max to 0.0
 	set color_scale_max 0.0
+
+	set dat [open $fname r]
+        gets $dat file_type
 
 	for {set frame_no 0} {$frame_no<$framecount} {incr frame_no} {
 		# color by data read from file
