@@ -6,8 +6,9 @@ mol addfile traj.trr type trr first 0 last -1 step 1 filebonds 1 autobonds 1 wai
 animate delete beg 0 end 0 skip 0 0
 
 
+source ../../pf_draw.tcl
 package require pf_draw
 pf_init 0.2 "cyl_w"
-pf_read "summed_scalar.pfa"
+pf_read "pairwise_forces_scalar_summed.pfa"
 pf_draw
 trace variable vmd_frame(0) w pf_draw

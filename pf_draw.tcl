@@ -190,6 +190,8 @@ proc pf_read {fname {residues_renumbered false}} {
 		puts "now loading inter-atom pairwise forces"
 	}
 	set f [open $fname r]
+        gets $f file_type
+
 	set framecount [molinfo top get numframes]
 	while {1} {
 		set line [gets $f]
